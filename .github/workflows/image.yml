@@ -60,3 +60,4 @@ jobs:
           modules=$(docker run --rm "$(echo "${{ steps.meta.outputs.tags }}" | head -1)" caddy list-modules)
           echo "$modules" | grep -x http.handlers.replace_response
           echo "$modules" | grep -x dns.providers.infomaniak
+          echo "$modules" | grep -x http.handlers.rate_limit

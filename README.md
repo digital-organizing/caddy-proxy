@@ -1,11 +1,13 @@
 # caddy-proxy
 
 The Caddy image the app hosts of digital-organizing run as their proxy: the
-official `caddy` image with two extra modules:
+official `caddy` image with three extra modules:
 [replace-response](https://github.com/caddyserver/replace-response), which
-rewrites text in pages passed on from another site, and
+rewrites text in pages passed on from another site;
 [caddy-dns/infomaniak](https://github.com/caddy-dns/infomaniak), with which
-Caddy gets wildcard certificates through Infomaniak's DNS.
+Caddy gets wildcard certificates through Infomaniak's DNS; and
+[caddy-ratelimit](https://github.com/mholt/caddy-ratelimit), which limits how
+many requests one visitor may make.
 
 It holds no configuration and no token. Which app host runs which tag, and the proxy's
 config, are in the `infra` repository (role `caddy_proxy`).
