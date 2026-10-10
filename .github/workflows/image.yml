@@ -53,7 +53,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # The module must really be in the image that was built.
-      - name: Check the module is there
+      # The modules must really be in the image that was built.
+      - name: Check the modules are there
         if: github.event_name != 'pull_request'
-        run: docker run --rm "$(echo "${{ steps.meta.outputs.tags }}" | head -1)" caddy list-modules | grep -x http.handlers.replace_response
+        run: |
+          modules=$(docker run --rm "$(echo "${{ steps.meta.outputs.tags }}" | head -1)" caddy list-modules)
+          echo "$modules" | grep -x http.handlers.replace_response
+          echo "$modules" | grep -x dns.providers.infomaniak

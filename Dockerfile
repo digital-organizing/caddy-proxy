@@ -6,8 +6,11 @@ ARG CADDY_VERSION=2.11.7
 FROM caddy:${CADDY_VERSION}-builder AS build
 # replace-response rewrites text in pages the proxy passes on from another
 # site (campaign pages mirrored from Webflow under their own domain).
+# caddy-dns/infomaniak lets Caddy prove a domain through DNS, which a wildcard
+# certificate needs; the API token is given to the container, not kept here.
 RUN xcaddy build \
-    --with github.com/caddyserver/replace-response@v0.0.0-20250618171559-80962887e4c6
+    --with github.com/caddyserver/replace-response@v0.0.0-20250618171559-80962887e4c6 \
+    --with github.com/caddy-dns/infomaniak@v1.0.2
 
 FROM caddy:${CADDY_VERSION}
 COPY --from=build /usr/bin/caddy /usr/bin/caddy
