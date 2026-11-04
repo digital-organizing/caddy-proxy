@@ -16,4 +16,7 @@ RUN xcaddy build \
     --with github.com/mholt/caddy-ratelimit@5625512f24f6f59d6f64fb3aafe5eecff0b286db
 
 FROM caddy:${CADDY_VERSION}
+# The official image is not rebuilt for every Alpine fix (brotli-libs 1.2.1,
+# 2026-11); take the package updates of its Alpine release at build time.
+RUN apk upgrade --no-cache
 COPY --from=build /usr/bin/caddy /usr/bin/caddy
